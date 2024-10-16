@@ -1,0 +1,61 @@
+import pandas as pd
+
+# Load the dataset (adjust the file path as necessary)
+iris_data = pd.read_csv('path_to_your_file/iris.csv')
+
+print(iris_data.head())
+print(iris_data.info())
+
+# Assuming the dataset has all the necessary columns
+# No need to combine if all data is in one DataFrame
+
+# Assuming the dataset has all the necessary columns
+# No need to combine if all data is in one DataFrame
+
+
+correlation_matrix = iris_data.corr()
+print(correlation_matrix)
+
+# Averages
+averages = iris_data.mean()
+
+# Medians
+medians = iris_data.median()
+
+# Standard Deviations
+std_devs = iris_data.std()
+
+print("Averages:\n", averages)
+print("Medians:\n", medians)
+print("Standard Deviations:\n", std_devs)
+
+
+# Group by species to get mean values
+species_means = iris_data.groupby('species').mean()
+print(species_means)
+
+# Compare species means to assess similarity
+similarity = species_means.corr()
+print("Similarity between species:\n", similarity)
+
+# Iris Dataset Analysis
+
+## Purpose
+This project analyzes Fisher's Iris dataset to understand the physical characteristics of three different species of irises.
+
+## Class Design and Implementation
+This project utilizes Pandas for data manipulation and analysis. The main components include loading data, calculating statistics, and assessing species similarity.
+
+### Attributes
+- `iris_data`: DataFrame containing the iris dataset.
+- `correlation_matrix`: Matrix showing correlation between different measurements.
+- `species_means`: Mean values for each species for analysis.
+
+### Methods
+- `mean()`: Calculates average measurements for each species.
+- `median()`: Calculates median measurements for each species.
+- `std()`: Calculates standard deviation for each measurement.
+
+## Limitations
+The analysis is limited to the Iris dataset, which may not capture all variations in iris species. Correlation does not imply causation.
+
