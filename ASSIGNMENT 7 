@@ -1,0 +1,75 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the diabetes dataset
+diabetes_data = load_diabetes()
+X = diabetes_data.data
+y = diabetes_data.target
+
+# Convert to DataFrame for easier manipulation
+df = pd.DataFrame(data=X, columns=diabetes_data.feature_names)
+df['target'] = y
+
+# Display the first few rows of the dataset
+print(df.head())
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize models
+models = {
+    "Linear Regression": LinearRegression(),
+    "Random Forest Regressor": RandomForestRegressor(random_state=42),
+    "Support Vector Regressor": SVR()
+}
+
+# Train models and store results
+results = {}
+
+for model_name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    
+    # Calculate metrics
+    mse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    
+    results[model_name] = {'MSE': mse, 'R2': r2}
+
+    # Initialize models
+models = {
+    "Linear Regression": LinearRegression(),
+    "Random Forest Regressor": RandomForestRegressor(random_state=42),
+    "Support Vector Regressor": SVR()
+}
+
+# Train models and store results
+results = {}
+
+for model_name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    
+    # Calculate metrics
+    mse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    
+    results[model_name] = {'MSE': mse, 'R2': r2}
+
+    # Display results
+results_df = pd.DataFrame(results).T
+print(results_df)
+
+# Determine the best model based on R² score
+best_model = results_df['R2'].idxmax()
+best_mse = results_df['MSE'].min()
+
+print(f"The best model is: {best_model} with MSE: {best_mse:.2f} and R²: {results_df.loc[best_model, 'R2']:.2f}")
