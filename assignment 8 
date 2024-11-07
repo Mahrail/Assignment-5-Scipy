@@ -1,0 +1,24 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from sklearn.datasets import load_iris
+
+# Load the Iris dataset
+iris = load_iris()
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['species'] = iris.target
+iris_df['species'] = iris_df['species'].map({0: 'setosa', 1: 'versicolor', 2: 'virginica'})
+# Pairplot to visualize relationships between features colored by species
+sns.pairplot(iris_df, hue='species', markers=["o", "s", "D"])
+plt.title('Pairplot of Iris Species')
+plt.show()
+# Boxplot to compare sepal length across species
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='species', y='sepal length (cm)', data=iris_df)
+plt.title('Boxplot of Sepal Length by Species')
+plt.show()
+# Violin plot to compare petal width across species
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='species', y='petal width (cm)', data=iris_df)
+plt.title('Violin Plot of Petal Width by Species')
+plt.show()
