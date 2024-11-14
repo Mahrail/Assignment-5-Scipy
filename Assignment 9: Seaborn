@@ -1,0 +1,22 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the data
+data = pd.read_csv('Exercise_Data.csv')
+
+# Check for missing values
+print("Missing values per column:\n", data.isnull().sum())
+
+# Clean the data if needed (e.g., drop missing values)
+data.dropna(inplace=True)
+
+# Check data types to ensure pulse data is in the correct format
+print("Data types:\n", data.dtypes)
+
+# Create a categorical plot for pulse values by diet and exercise type
+sns.catplot(x='diet_type', y='pulse', hue='exercise_type', data=data, kind='box', height=6, aspect=1.5)
+plt.title('Pulse Values by Diet and Exercise Type')
+plt.xlabel('Diet Type')
+plt.ylabel('Pulse Rate')
+plt.show()
